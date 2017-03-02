@@ -13,6 +13,7 @@ public class Client {
 	int port = 8000; // default port
 	BufferedReader br = null;
 	BufferedWriter bw = null;
+	StringBuilder sb;
 
 	// constructor
 	public Client(String hostname, int port) {
@@ -22,13 +23,12 @@ public class Client {
 			sock = new Socket(hostname, port);
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+			sb = new StringBuilder();
 
 		} catch (UnknownHostException e) {
 			System.err.println("Don't know about host: " + hostname + "on port: " + port);
-			e.printStackTrace();
 		} catch (IOException e) {
 			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
-			e.printStackTrace();
 		}
 
 	}
@@ -40,20 +40,17 @@ public class Client {
 				bw.newLine();
 				bw.flush();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
 			}
 		}
 	}
 
 	public void receive() {
 		try {
-				String responseLine = br.readLine().concat("\r\n");
-				System.out.println("Server: " + responseLine);
-				
+			String responseLine = br.readLine().concat("\r\n");
+			System.out.println("Server: " + responseLine);
 		} catch (IOException e) {
 			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
-			e.printStackTrace();
 		}
 	}
 
@@ -65,8 +62,7 @@ public class Client {
 			br.close();
 			sock.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
 		}
 	}
 
