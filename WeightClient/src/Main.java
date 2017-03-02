@@ -16,29 +16,27 @@ public class Main {
 
 		client = new Client(args[0], Integer.parseInt(args[1]));
 		br = new BufferedReader(new InputStreamReader(System.in));
-		
+		String hostname = client.hostname;
+
 		// must get a response since we just connected to server.
 		client.receive();
 
 		System.out.println("Type \"quit\" to exit.");
 		while (true) {
-			System.out.print("Type in any command >");
+
+			System.out.print(hostname + ":$ ");
 			input = br.readLine();
+
+			if (input.isEmpty())
+				continue;
 
 			if ("quit".equalsIgnoreCase(input)) {
 				client.close();
 				System.exit(0);
 			}
-			
-			
-			
 			client.send(input);
 			client.receive();
-			
-			
 		}
-
-
 	}
 
 }
