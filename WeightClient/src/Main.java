@@ -1,44 +1,44 @@
+import java.io.BufferedReader;
 import java.io.IOException;
-
+import java.io.InputStreamReader;
 
 public class Main {
 
-	Client client;
-	
-	public static void main(String[] args) {
-		if (args.length < 1 | args.length < 2 | args.length > 3) {
-			System.out.println("usage Main <hostname> <port>");
-			System.exit(0);
+	public static void main(String[] args) throws IOException {
+
+		Client client;
+		BufferedReader br;
+		String input;
+
+		if (args.length < 2 | args.length > 2) {
+			throw new IllegalArgumentException("\nusage: Main <hostname> <port>");
 		}
-		Client client = new Client(args[0], Integer.parseInt(args[1]));
-		try {
-			client.output.writeBytes("test\n");
-			client.send("Hello");
+
+		client = new Client(args[0], Integer.parseInt(args[1]));
+		br = new BufferedReader(new InputStreamReader(System.in));
+		
+		// must get a response since we just connected to server.
+		client.receive();
+
+		System.out.println("Type \"quit\" to exit.");
+		while (true) {
+			System.out.print("Type in any command >");
+			input = br.readLine();
+
+			if ("quit".equalsIgnoreCase(input)) {
+				client.close();
+				System.exit(0);
+			}
+			
+			
+			
+			client.send(input);
 			client.receive();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			
 		}
-		
-		
-		
-		
-		
-	
-		
-		
-		
+
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
