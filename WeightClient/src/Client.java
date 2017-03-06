@@ -48,7 +48,7 @@ public class Client implements ISock {
 		try {
 			System.out.println("Server: " + br.readLine());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		// for (String response = br.readLine(); response != null; response =
