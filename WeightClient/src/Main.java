@@ -34,8 +34,10 @@ public class Main {
 				client.close();
 				System.exit(0);
 			}
+			
 			client.send(input);
 			client.receive();
+			
 		}
 	}
 
