@@ -1,20 +1,18 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-
-public class Client implements ISock{
+public class Client implements ISock {
 
 	Socket sock = null;
 	String hostname;
 	int port = 8000; // default port
 	BufferedReader br = null;
-	BufferedWriter bw = null;
-	
+	PrintWriter bw = null;
 
 	// constructor that takes a hostname and a port
 	public Client(String hostname, int port) {
@@ -23,8 +21,7 @@ public class Client implements ISock{
 			this.port = port;
 			sock = new Socket(hostname, port);
 			br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-			
+			bw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
 
 		} catch (UnknownHostException e) {
 			System.err.println("Don't know about host: " + hostname + "on port: " + port);
@@ -36,34 +33,41 @@ public class Client implements ISock{
 
 	public void send(String msg) {
 		if (sock != null && br != null && bw != null) {
-			try {
-				bw.write(msg);
-				bw.newLine();
-				bw.flush();
-			} catch (IOException e) {
-				System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
-			}
+			bw.println(msg);
+			bw.flush();
 		}
 	}
 
 	public void receive() {
+
+		/*
+		 *  TODO must make a loop to get all input from the socket.
+		 *  != null doesn't work, since it reads until socket gets closed.
+		 *  
+		 */
+		
+		// for (String response = br.readLine(); response != null; response =
+		// br.readLine()) {
+		// System.out.println("Server: " + response);
+		// }
+
 		try {
-			
-			
-			
-			for (String response = br.readLine(); response != null; response = br.readLine()) {
-			System.out.println("Server: " + response);
+			while (sock.getInputStream().available() > 0) {
+
+				int ready = sock.getInputStream().available();
+				byte[] bytes = new byte[ready];
+				sock.getInputStream().read(bytes);
+				
+
 			}
 			
 			
-			
-				
-			
-			
+
 		} catch (IOException e) {
-			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
+
+			e.printStackTrace();
 		}
-		
+
 	}
 
 	// close down properly
