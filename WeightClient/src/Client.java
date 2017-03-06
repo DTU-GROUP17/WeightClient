@@ -55,7 +55,6 @@ public class Client implements ISock {
 		// br.readLine()) {
 		// System.out.println("Server: " + response);
 		// }
-
 		try {
 			while (sock.getInputStream().available() > 0) {
 
