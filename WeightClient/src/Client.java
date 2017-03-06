@@ -45,17 +45,15 @@ public class Client implements ISock {
 		 *  != null doesn't work, since it reads until socket gets closed.
 		 *  
 		 */
-		try {
-			System.out.println("Server: " + br.readLine());
-		} catch (IOException e1) {
-			
-			e1.printStackTrace();
-		}
+	
 		// for (String response = br.readLine(); response != null; response =
 		// br.readLine()) {
 		// System.out.println("Server: " + response);
 		// }
 		try {
+			
+			
+			System.out.println("Server: " + br.readLine());
 			while (sock.getInputStream().available() > 0) {
 
 				int ready = sock.getInputStream().available();
