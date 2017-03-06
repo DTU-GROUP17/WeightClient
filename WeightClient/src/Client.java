@@ -54,14 +54,14 @@ public class Client implements ISock {
 			
 			
 			System.out.println("Server: " + br.readLine());
-			while (sock.getInputStream().available() > 0) {
-
-				int ready = sock.getInputStream().available();
-				byte[] bytes = new byte[ready];
-				sock.getInputStream().read(bytes);
-				
-
-			}
+//			while (sock.getInputStream().available() > 0) {
+//
+//				int ready = sock.getInputStream().available();
+//				byte[] bytes = new byte[ready];
+//				sock.getInputStream().read(bytes);
+//				
+//
+//			}
 			
 			
 
