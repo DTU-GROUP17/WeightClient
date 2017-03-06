@@ -24,23 +24,20 @@ public class Main {
 
 		System.out.println("Type \"exit\" to exit.");
 	
-		while ( (input = stdIn.readLine()) != null) {
+		while (true) {
 
 			System.out.print(hostname + "$ ");
-			
+			input = stdIn.readLine();
 
 			if (input.isEmpty())
 				continue;
 
-			if ("exit".equalsIgnoreCase(input)) {
+			if ("quit".equalsIgnoreCase(input)) {
 				client.close();
 				System.exit(0);
 			}
-			
 			client.send(input);
 			client.receive();
-
-			
 		}
 	}
 
