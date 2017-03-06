@@ -25,7 +25,6 @@ public class Main {
 		System.out.println("Type \"exit\" to exit.");
 	
 		while (true) {
-
 			System.out.print(hostname + "$ ");
 			input = stdIn.readLine();
 
