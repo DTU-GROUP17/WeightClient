@@ -8,6 +8,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		Client client;
+		String hostname;
 		Scanner stdIn;
 		Menu menu;
 
@@ -17,7 +18,7 @@ public class Main {
 
 		client = new Client(args[0], Integer.parseInt(args[1]));
 		stdIn = new Scanner(System.in);
-		String hostname = client.hostname;
+		hostname = client.hostname;
 		menu = new Menu();
 
 		while (true) {
@@ -38,7 +39,8 @@ public class Main {
 				client.receive();
 				break;
 			case 3:
-
+				client.send("T\r\n");
+				client.receive();
 				client.send("P111 \"Placer tara paa vaegten\"\r\n");
 				client.receive();
 				break;

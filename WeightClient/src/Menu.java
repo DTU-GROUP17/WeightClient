@@ -2,8 +2,9 @@
 public class Menu {
 
 	public void display() {
-		System.out.println("-- Actions --");
-		System.out.println("Select an option:\n" + "	1) Indtast operatoernummer \n" + // P111
+		System.out.println("---------- Weight Client ----------");
+		System.out.println("Vælg en handling:\n" + 
+				"	1) Indtast operatoernummer \n" + // P111
 				"	2) Indtast batchnummer \n" + //
 				"	3) Tarér vægten \n" + // D
 				"	4) Slet vægtens display\n" + // DW
