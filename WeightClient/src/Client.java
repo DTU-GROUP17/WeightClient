@@ -33,38 +33,18 @@ public class Client implements ISock {
 
 	public void send(String msg) {
 		if (sock != null && br != null && bw != null) {
-			bw.println(msg);
+			bw.write(msg);
 			bw.flush();
+
 		}
 	}
 
 	public void receive() {
 
-		/*
-		 *  TODO must make a loop to get all input from the socket.
-		 *  != null doesn't work, since it reads until socket gets closed.
-		 *  
-		 */
-	
-		// for (String response = br.readLine(); response != null; response =
-		// br.readLine()) {
-		// System.out.println("Server: " + response);
-		// }
 		try {
-			
-			
-			String responseLine = br.readLine().concat("\r\n");
+
+			String responseLine = br.readLine();
 			System.out.println("Server: " + responseLine);
-//			while (sock.getInputStream().available() > 0) {
-//
-//				int ready = sock.getInputStream().available();
-//				byte[] bytes = new byte[ready];
-//				sock.getInputStream().read(bytes);
-//				
-//
-//			}
-			
-			
 
 		} catch (IOException e) {
 

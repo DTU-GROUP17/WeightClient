@@ -1,43 +1,69 @@
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 
 		Client client;
-		BufferedReader stdIn;
-		String input;
+		Scanner stdIn;
+		Menu menu;
 
 		if (args.length < 2 | args.length > 2) {
 			throw new IllegalArgumentException("\nusage: Main <hostname> <port>");
 		}
 
 		client = new Client(args[0], Integer.parseInt(args[1]));
-		stdIn = new BufferedReader(new InputStreamReader(System.in));
+		stdIn = new Scanner(System.in);
 		String hostname = client.hostname;
+		menu = new Menu();
 
-		// must get a response since we just connected to server.
-		client.receive();
-		
-
-		System.out.println("Type \"exit\" to exit.");
-	
 		while (true) {
+			menu.display();
 			System.out.print(hostname + "$ ");
-			input = stdIn.readLine();
+			int input = stdIn.nextInt();
 
-			if (input.isEmpty())
-				continue;
+			switch (input) {
+			case 1:
+				client.send("P111 \"Indtast operatoernummer\"\r\n");
+				client.receive();
+				break;
+			case 2:
+				client.send("RM20 8 \"Indtast batchnummer\" \"\" \"&3\"\r\n");
+				client.receive();
+				// client.receive();
+				client.send("P111 \"Vaegten skal vaere ubelastet\"\r\n");
+				client.receive();
+				break;
+			case 3:
 
-			if ("quit".equalsIgnoreCase(input)) {
+				client.send("P111 \"Placer tara paa vaegten\"\r\n");
+				client.receive();
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				client.send("Q\r\n");
 				client.close();
-				System.exit(0);
+				stdIn.close();
+				menu.exit();
+				break;
+			default:
+				menu.wrong();
 			}
-			client.send(input);
-			client.receive();
+
 		}
+
 	}
 
 }
