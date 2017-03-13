@@ -1,6 +1,7 @@
+import java.io.IOException;
 
 public interface ISock {
 	void send (String msg);
-	void receive();
+	String receive() throws IOException;
 	void close();
 }

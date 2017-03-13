@@ -38,15 +38,14 @@ public class Client implements ISock {
 		}
 	}
 
-	public void receive() {
-		try {
+	public String receive() throws IOException {
+		
 			String responseLine = br.readLine();
-			System.out.println("Server: " + responseLine);
-		} catch (IOException e) {
+			return responseLine;
+//			System.out.println("Server: " + responseLine);
 
-			e.printStackTrace();
-		}
-
+		
+		
 	}
 	
 	public String getHostname() {
