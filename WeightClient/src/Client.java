@@ -8,11 +8,11 @@ import java.net.UnknownHostException;
 
 public class Client implements ISock {
 
-	Socket sock = null;
-	String hostname;
-	int port = 8000; // default port
-	BufferedReader br = null;
-	PrintWriter bw = null;
+	private Socket sock = null;
+	private String hostname;
+	private int port = 8000; // default port
+	private BufferedReader br = null;
+	private PrintWriter bw = null;
 
 	// constructor that takes a hostname and a port
 	public Client(String hostname, int port) {
@@ -35,22 +35,22 @@ public class Client implements ISock {
 		if (sock != null && br != null && bw != null) {
 			bw.write(msg);
 			bw.flush();
-
 		}
 	}
 
 	public void receive() {
-
 		try {
-
 			String responseLine = br.readLine();
 			System.out.println("Server: " + responseLine);
-
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
 
+	}
+	
+	public String getHostname() {
+		return this.hostname;
 	}
 
 	// close down properly
