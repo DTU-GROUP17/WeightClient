@@ -4,6 +4,15 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+	
+	//
+	public static void close(Client client, Scanner stdIn, Menu menu) {
+		client.send("Q\r\n");
+		client.close();
+		stdIn.close();
+		menu.exit();
+		System.exit(0);
+	}
 
 	public static void main(String[] args) throws IOException {
 
@@ -21,20 +30,31 @@ public class Main {
 		hostname = client.hostname;
 		menu = new Menu();
 
+		menu.operator();
+		int operatoernummer = stdIn.nextInt();
+		
+		//checks if the operator id is 12
+		if (!(operatoernummer == 12)) {
+			close(client, stdIn, menu);
+		}
+		else {
+			client.send("D \"" + operatoernummer + "\"\r\n");
+			client.receive();
+		}
+		
 		while (true) {
+
 			menu.display();
+
 			System.out.print(hostname + "$ ");
 			int input = stdIn.nextInt();
 
 			switch (input) {
 			case 1:
-				client.send("P111 \"Indtast operatoernummer\"\r\n");
-				client.receive();
 				break;
 			case 2:
-				client.send("RM20 8 \"Indtast batchnummer\" \"\" \"&3\"\r\n");
+				client.send("RM20 8 \"1234\" \"\" \"&3\"\r\n");
 				client.receive();
-				// client.receive();
 				client.send("P111 \"Vaegten skal vaere ubelastet\"\r\n");
 				client.receive();
 				break;
@@ -55,17 +75,12 @@ public class Main {
 			case 8:
 				break;
 			case 9:
-				client.send("Q\r\n");
-				client.close();
-				stdIn.close();
-				menu.exit();
+				close(client, stdIn, menu);
 				break;
 			default:
 				menu.wrong();
 			}
-
 		}
-
 	}
 
 }
