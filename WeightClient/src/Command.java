@@ -20,19 +20,19 @@ public class Command {
 		sb.append(response);
 		result = sb.indexOf("S I");
 		if (result == 1) {
-			throw new ExceptionCommand("Kommandoen kunne ikke køres");
+			throw new ExceptionCommand("S I: Kommandoen kunne ikke køres");
 		}
 		result = sb.indexOf("S +");
 		if (result == 1) {
-			throw new ExceptionCommand("Der er overload");
+			throw new ExceptionCommand("S +: Der er overload");
 		}
 		result = sb.indexOf("S -");
 		if (result == 1) {
-			throw new ExceptionCommand("Der er underload");
+			throw new ExceptionCommand("S -: Der er underload");
 		}
 		result = sb.indexOf("ES");
 		if (result == 1) {
-			throw new ExceptionCommand("Fejl i kommando. Kan ikke gendkende kommandoen");
+			throw new ExceptionCommand("ES: Fejl i kommando. Kan ikke gendkende kommandoen");
 		}
 		sb.delete(0,11);
 		sb.delete(3,6);
@@ -47,11 +47,11 @@ public class Command {
 		sb.append(response);
 		result = sb.indexOf("T I");
 		if (result == 1) {
-			throw new ExceptionCommand("Kommandoen kunne ikke køres");
+			throw new ExceptionCommand("T I: Kommandoen kunne ikke køres");
 		}
 		result = sb.indexOf("T L");
 		if (result == 1) {
-			throw new ExceptionCommand("Forstod ikke parametret");
+			throw new ExceptionCommand("T L: Forstod ikke parametret");
 		}
 		response = sb.toString();
 		sb.setLength(0);
@@ -64,15 +64,15 @@ public class Command {
 		sb.append(response);
 		result = sb.indexOf("RM20 I");
 		if (result == 1) {
-			throw new ExceptionCommand("Kommandoen kunne ikke køres");
+			throw new ExceptionCommand("RM20 I: Kommandoen kunne ikke køres");
 		}
 		result = sb.indexOf("RM20 L");
 		if (result == 1) {
-			throw new ExceptionCommand("Forstod ikke parametret");
+			throw new ExceptionCommand("RM20 L: Forstod ikke parametret");
 		}
 		result = sb.indexOf("RM20 C");
 		if (result == 1) {
-			throw new ExceptionCommand("Kommandooen blev afbrudt");
+			throw new ExceptionCommand("RM20 C: Kommandooen blev afbrudt");
 		}
 		response = sb.toString();
 		sb.setLength(0);
@@ -85,11 +85,11 @@ public class Command {
 		sb.append(response);
 		result = sb.indexOf("P111 I");
 		if (result == 1) {
-			throw new ExceptionCommand("Kommandoen kunne ikke køres");
+			throw new ExceptionCommand("P111 I: Kommandoen kunne ikke køres");
 		}
 		result = sb.indexOf("P111 L");
 		if (result == 1) {
-			throw new ExceptionCommand("Teksten kan vaere alt for lang");
+			throw new ExceptionCommand("P111 L: Teksten kan vaere alt for lang");
 		}
 		response = sb.toString();
 		sb.setLength(0);
