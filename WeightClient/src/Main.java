@@ -17,7 +17,7 @@ public class Main {
 		System.exit(0);
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ExceptionCommand {
 		final Client client;
 		final String hostname;
 		final Scanner stdIn;
