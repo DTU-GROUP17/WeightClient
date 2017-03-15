@@ -1,13 +1,16 @@
+/**
+ * The Main.java class is where the weight client program starts.
+ * There is created a close method to ensure proper closing of the weight client.
+ */
+
 
 import java.io.IOException;
-
 import java.util.Scanner;
 
 public class Main {
 	
 	
 	
-	//
 	public static void close(Client client, Scanner stdIn, Menu menu) throws IOException {
 		client.send("Q\r\n");
 		client.receive();
@@ -24,9 +27,10 @@ public class Main {
 		final Menu menu;
 		final Command command;
 		double tara = 0, netto = 0, brutto = 0; 
+		String operatoerId = null, batchId = null;
 
 		if (args.length < 2 | args.length > 2) {
-			throw new IllegalArgumentException("\nusage: Main <hostname> <port>");
+			throw new IllegalArgumentException("\nanvendelse: Main <host> <port>");
 		}
 		client = new Client(args[0], Integer.parseInt(args[1]));
 		command = new Command();
@@ -36,7 +40,7 @@ public class Main {
 
 		
 		while (true) {
-
+			
 			menu.display();
 
 			System.out.print(hostname + "$ ");
@@ -48,6 +52,7 @@ public class Main {
 				try {
 					command.RM20(client);
 					command.RM20(client);
+					operatoerId = command.getInputUser();
 				} catch (ExceptionCommand e) {
 					e.getMessage();
 				}
@@ -55,6 +60,7 @@ public class Main {
 				try {
 					command.RM20(client);
 					command.RM20(client);
+					batchId = command.getInputUser();
 				} catch (ExceptionCommand e) {
 					e.getMessage();
 				}
@@ -135,7 +141,7 @@ public class Main {
 				}
 										
 					
-					menu.resultat(tara, netto, brutto);
+					menu.resultat(tara, netto, brutto, operatoerId, batchId);
 					
 					resultat: while (true) {
 						input = stdIn.nextInt();

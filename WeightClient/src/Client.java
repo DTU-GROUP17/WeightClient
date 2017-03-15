@@ -1,3 +1,9 @@
+/**
+ * The Client.java class creates the socket for the weight client.
+ * It contains send and receive methods to communicate with the weight simulator.
+ * There is created a close method to ensure proper closing of the weight client.
+ */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,7 +12,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client implements ISock {
+public class Client {
 
 	private Socket sock = null;
 	private String hostname;
@@ -24,9 +30,9 @@ public class Client implements ISock {
 			bw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
 
 		} catch (UnknownHostException e) {
-			System.err.println("Don't know about host: " + hostname + "on port: " + port);
+			System.err.println("Kender ikke host: " + hostname + "paa port: " + port);
 		} catch (IOException e) {
-			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
+			System.err.println("Kunne ikke faa I/O for host: " + hostname + "paa port: " + port);
 		}
 
 	}
@@ -39,15 +45,13 @@ public class Client implements ISock {
 	}
 
 	public String receive() throws IOException {
-		
-			String responseLine = br.readLine();
-			return responseLine;
-//			System.out.println("Server: " + responseLine);
 
-		
-		
+		String response = br.readLine();
+		System.out.println(response);
+		return response;
+
 	}
-	
+
 	public String getHostname() {
 		return this.hostname;
 	}
@@ -60,7 +64,7 @@ public class Client implements ISock {
 			br.close();
 			sock.close();
 		} catch (IOException e) {
-			System.err.println("Couldn't get I/O for the host: " + hostname + "on port: " + port);
+			System.err.println("Kunne ikke faa I/O for host: " + hostname + "paa port: " + port);
 		}
 	}
 

@@ -1,3 +1,10 @@
+/**
+ * The Command.java class is where the errors occurring for the commands treated with throw.
+ * There is a getter for the variable userInput so the Main.java class get input such as
+ * operator id or batch id for further use.
+ * StringBuilder is used to get only the needed part of a string and saving it for the getter.
+ */
+
 import java.io.IOException;
 
 class ExceptionCommand extends Exception {
@@ -8,6 +15,7 @@ class ExceptionCommand extends Exception {
 public class Command {
 
 	private StringBuilder sb;
+	private String userInput;
 	
 	
 	public Command() {
@@ -16,22 +24,17 @@ public class Command {
 
 	public double S(Client client) throws IOException, ExceptionCommand {
 		String response = client.receive();
-		int result;
 		sb.append(response);
-		result = sb.indexOf("S I");
-		if (result == 1) {
+		if (response.contains("S I")) {
 			throw new ExceptionCommand("S I: Kommandoen kunne ikke køres");
 		}
-		result = sb.indexOf("S +");
-		if (result == 1) {
+		if (response.contains("S +")) {
 			throw new ExceptionCommand("S +: Der er overload");
 		}
-		result = sb.indexOf("S -");
-		if (result == 1) {
+		if (response.contains("S -")) {
 			throw new ExceptionCommand("S -: Der er underload");
 		}
-		result = sb.indexOf("ES");
-		if (result == 1) {
+		if (response.contains("\"ES\"")) {
 			throw new ExceptionCommand("ES: Fejl i kommando. Kan ikke gendkende kommandoen");
 		}
 		sb.delete(0,11);
@@ -43,15 +46,15 @@ public class Command {
 	}
 	public void T(Client client) throws IOException, ExceptionCommand {
 		String response = client.receive();
-		int result;
 		sb.append(response);
-		result = sb.indexOf("T I");
-		if (result == 1) {
+		if (response.contains("T I")) {
 			throw new ExceptionCommand("T I: Kommandoen kunne ikke køres");
 		}
-		result = sb.indexOf("T L");
-		if (result == 1) {
+		if (response.contains("T L")) {
 			throw new ExceptionCommand("T L: Forstod ikke parametret");
+		}
+		if (response.contains("\"ES\"")) {
+			throw new ExceptionCommand("ES: Fejl i kommando. Kan ikke gendkende kommandoen");
 		}
 		response = sb.toString();
 		sb.setLength(0);
@@ -60,19 +63,21 @@ public class Command {
 
 	public void RM20(Client client) throws IOException, ExceptionCommand {
 		String response = client.receive();
-		int result;
 		sb.append(response);
-		result = sb.indexOf("RM20 I");
-		if (result == 1) {
+		if (response.contains("RM20 A \"")) {
+			userInput = sb.substring(7, sb.length());
+		}
+		if (response.contains("RM20 I")) {
 			throw new ExceptionCommand("RM20 I: Kommandoen kunne ikke køres");
 		}
-		result = sb.indexOf("RM20 L");
-		if (result == 1) {
+		if (response.contains("RM20 L")) {
 			throw new ExceptionCommand("RM20 L: Forstod ikke parametret");
 		}
-		result = sb.indexOf("RM20 C");
-		if (result == 1) {
+		if (response.contains("RM20 C")) {
 			throw new ExceptionCommand("RM20 C: Kommandooen blev afbrudt");
+		}
+		if (response.contains("\"ES\"")) {
+			throw new ExceptionCommand("ES: Fejl i kommando. Kan ikke gendkende kommandoen");
 		}
 		response = sb.toString();
 		sb.setLength(0);
@@ -81,19 +86,23 @@ public class Command {
 	
 	public void P111(Client client) throws IOException, ExceptionCommand {
 		String response = client.receive();
-		int result;
 		sb.append(response);
-		result = sb.indexOf("P111 I");
-		if (result == 1) {
+		if (response.contains("P111 I")) {
 			throw new ExceptionCommand("P111 I: Kommandoen kunne ikke køres");
 		}
-		result = sb.indexOf("P111 L");
-		if (result == 1) {
+		if (response.contains("P111 L")) {
 			throw new ExceptionCommand("P111 L: Teksten kan vaere alt for lang");
+		}
+		if (response.contains("\"ES\"")) {
+			throw new ExceptionCommand("ES: Fejl i kommando. Kan ikke gendkende kommandoen");
 		}
 		response = sb.toString();
 		sb.setLength(0);
 		System.out.println("Server: "+response);
+	}
+	
+	public String getInputUser() {
+		return userInput;
 	}
 
 }
